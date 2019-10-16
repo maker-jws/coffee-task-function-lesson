@@ -37,6 +37,16 @@ const coffeePress = {
   isFull: false
 };
 //Defining Processes
+
+function grindCoffee(coffee, container) {
+  const cafe = coffee;
+  grinder.content = cafe.origin;
+  grinder.isFull = true;
+  grinder.isGrinding = true;
+  console.log("You grind the", cafe.type, "roast", cafe.origin, "coffee");
+  cafe.state = "ground";
+  pourGrounds(cafe, container);
+}
 function heatWater(liquid, container) {
   kettle.content = liquid;
   const heatingWater = kettle.content;
@@ -62,15 +72,6 @@ function heatWater(liquid, container) {
     liquid.container = container;
     steepCoffee(container, cup);
   }
-}
-function grindCoffee(coffee, container) {
-  const cafe = coffee;
-  grinder.content = cafe.origin;
-  grinder.isFull = true;
-  grinder.isGrinding = true;
-  console.log("You grind the", cafe.type, "roast", cafe.origin, "coffee");
-  cafe.state = "ground";
-  pourGrounds(cafe, container);
 }
 function pourGrounds(coffee, container) {
   if (coffee.state === "ground") {
@@ -105,17 +106,19 @@ function steepCoffee(container) {
     console.log("The coffee is not ready to brew");
   }
 }
-function pourCoffee(content, container) {
+function pourCoffee(source, container) {
   // console.log(content, container, "line 109");
-  const brew = content.content[0];
-  content.length = 0;
+  const brew = source.content[0];
+  source.length = 0;
   container.content = "Fresh brewed " + brew.origin + " is in your cup";
   return console.log(container.content);
 }
+
 const prepareCoffee = () => {
   grindCoffee(coffee, coffeePress);
   while (water.temp < 213) {
     heatWater(water, coffeePress);
   }
 };
+
 prepareCoffee();
